@@ -11,6 +11,6 @@ def get_user_from_id(vidId):
 
   search_response = youtube.videos().list(id=vidId, part="id,snippet").execute()
 
-  print search_response["items"][0]["snippet"]["channelTitle"]
+  return search_response["items"][0]["snippet"]["channelTitle"]
 
-get_user_from_id("u_xy1sjKyZc")
+#get_user_from_id("u_xy1sjKyZc")

@@ -12,11 +12,18 @@ r = praw.Reddit(user_agent="JustDudeStuff_V1",client_secret="AzvrzjEk6y6HL9MaEpK
 def GetTopSubmissions(subreddit, l):
     SubredditInstance = r.subreddit(subreddit)
     TopOfSub = SubredditInstance.top(limit = l)
+
+    UrlList = []
+    counter = 0
+
     for item in TopOfSub:
         match = re.search(r"youtube\.com/.*v=([^&]*)", item.url)
         if match:
             result = match.group(1)
-            print result
+            UrlList.append(result)
+            print UrlList[counter]
+            counter+=1
         else:
-            result = "no"
-GetTopSubmissions("Videos", 1000)
+            result = ""
+    return UrlList
+#GetTopSubmissions("Videos", 1000)
