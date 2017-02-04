@@ -53,14 +53,7 @@ def get_user_from_id(vidId):
   channelId = ""
   channelName = ""
 
-  #print search_response
-  print search_response
-  # snippet = search_response["snippet"]
-  # title = snippet["title"]
-  # videoId = search_response["id"]["videoId"]
-  # channelId = snippet["channelId"]
-  # channelTitle = snippet["channelTitle"]
-  # print channelTitle
+  print search_response["items"][0]["snippet"]["channelTitle"]
 
 youtube_search("h3h3")
 get_user_from_id("u_xy1sjKyZc")
