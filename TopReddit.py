@@ -21,9 +21,7 @@ def GetTopSubmissions(subreddit, l):
         if match:
             result = match.group(1)
             UrlList.append(result)
-            print UrlList[counter]
             counter+=1
         else:
             result = ""
     return UrlList
-#GetTopSubmissions("Videos", 1000)
