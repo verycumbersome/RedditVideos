@@ -10,15 +10,19 @@ parser.add_argument('--limit', help='sets subreddit top get limit', type=int)
 parser.add_argument('--subreddit', help='sets subreddit from which to get top youtube users')
 args = parser.parse_args()
 
-UrlLists = TopReddit.GetTopSubmissions(args.subreddit, args.limit)
+UrlLists, Klist = TopReddit.GetTopSubmissions(args.subreddit, args.limit)
 counter = 1
 userList = []
+karmaList = []
 
 for items in UrlLists:
     if counter<len(UrlLists):
+        karmaList.append(UrlLists[counter])
         try:
             YoutubeUser = YoutubeChannelFinder.get_user_from_id(UrlLists[counter])
             userList.append(YoutubeUser)
+            karmaList.append(Klist[counter])
+            print karmaList[counter]
         except IndexError:
             YoutubeUser = ''
         counter +=1

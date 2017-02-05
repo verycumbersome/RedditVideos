@@ -15,18 +15,19 @@ def GetTopSubmissions(subreddit, l):
     TopOfSub = SubredditInstance.top(limit = l)
 
     UrlList = []
+    KarmaList = []
     counter = 0
 
     for item in TopOfSub:
         match = re.search(r"youtube\.com/.*v=([^&]*)", item.url)
-        RedditUrl = "https://www.reddit.com" + item.permalink
 
-        print RedditUrl
+        print item.ups
 
         if match:
             result = match.group(1)
             UrlList.append(result)
+            KarmaList.append(item.ups)
             counter+=1
         else:
             result = ""
-    return UrlList
+    return UrlList, KarmaList
