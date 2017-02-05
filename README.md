@@ -16,7 +16,4 @@ the user_agent can pretty much be whatever you want.
 
 Now everything should be ready to run!
 
-##Usage
-###python main.py
-###[--limit][sets limit for number of posts to get from top]
-###[--subreddit][sets subreddit to draw posts from]
+##usage: python main.py [-h] [--limit LIMIT] [--subreddit SUBREDDIT]
