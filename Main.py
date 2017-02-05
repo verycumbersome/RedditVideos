@@ -13,22 +13,17 @@ args = parser.parse_args()
 UrlLists, Klist = TopReddit.GetTopSubmissions(args.subreddit, args.limit)
 counter = 1
 userList = []
-karmaList = []
 new_dictionary = {}
 
 for items in UrlLists:
     if counter<len(UrlLists):
-        karmaList.append(UrlLists[counter])
         try:
             YoutubeUser = {YoutubeChannelFinder.get_user_from_id(UrlLists[counter]): Klist[counter]}
             userList.append(YoutubeUser)
-            karmaList.append(Klist[counter])
 
-
-            print karmaList[counter]
         except IndexError:
-            YoutubeUser = ''
-        print counter, len(UrlLists), YoutubeUser
+            YoutubeUser = 'null'
+        print counter, "/", len(UrlLists), YoutubeUser
         counter +=1
     else:
         None

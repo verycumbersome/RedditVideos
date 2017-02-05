@@ -1,5 +1,4 @@
 import re
-import urllib2
 try:
     import praw
 except:
@@ -8,7 +7,7 @@ except:
     print "You must install %s to operate this program" % (lib)
     sys.exit()
 
-r = praw.Reddit(user_agent="JustDudeStuff_V1",client_secret="AzvrzjEk6y6HL9MaEpKDpNHtbTo",client_id="8FzeKTyVy50rhQ")
+r = praw.Reddit(user_agent="YoutubeUserGet",client_secret="",client_id="")
 
 def GetTopSubmissions(subreddit, l):
     SubredditInstance = r.subreddit(subreddit)
