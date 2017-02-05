@@ -15,3 +15,8 @@ In line 10 of TopReddit.py replace 'client_secret' with the client secret from t
 the user_agent can pretty much be whatever you want.
 
 Now everything should be ready to run!
+
+##Usage
+###python main.py
+###[--limit][sets limit for number of posts to get from top]
+###[--subreddit][sets subreddit to draw posts from]
