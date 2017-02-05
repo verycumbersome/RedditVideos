@@ -1,4 +1,5 @@
 import re
+import urllib2
 try:
     import praw
 except:
@@ -18,6 +19,10 @@ def GetTopSubmissions(subreddit, l):
 
     for item in TopOfSub:
         match = re.search(r"youtube\.com/.*v=([^&]*)", item.url)
+        RedditUrl = "https://www.reddit.com" + item.permalink
+
+        print RedditUrl
+
         if match:
             result = match.group(1)
             UrlList.append(result)
