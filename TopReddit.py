@@ -20,8 +20,6 @@ def GetTopSubmissions(subreddit, l):
     for item in TopOfSub:
         match = re.search(r"youtube\.com/.*v=([^&]*)", item.url)
 
-        print item.ups
-
         if match:
             result = match.group(1)
             UrlList.append(result)
