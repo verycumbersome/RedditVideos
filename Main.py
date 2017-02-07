@@ -12,6 +12,7 @@ args = parser.parse_args()
 
 UrlLists, Klist = TopReddit.GetTopSubmissions(args.subreddit, args.limit)
 counter = 1
+usercounter = 1
 userList = []
 new_dictionary = {}
 
@@ -37,4 +38,7 @@ for dictionary in userList:
 
 x = Counter(new_dictionary)
 y = OrderedDict(x.most_common())
-print y
+print "\n"
+for topUser in y:
+    print usercounter, topUser, y.values()[usercounter-1]
+    usercounter += 1

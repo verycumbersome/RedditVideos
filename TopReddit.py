@@ -7,7 +7,7 @@ except:
     print "You must install %s to operate this program" % (lib)
     sys.exit()
 
-r = praw.Reddit(user_agent="YoutubeUserGet",client_secret="",client_id="")
+r = praw.Reddit(user_agent="YoutubeUserGet",client_secret="AzvrzjEk6y6HL9MaEpKDpNHtbTo",client_id="8FzeKTyVy50rhQ")
 
 def GetTopSubmissions(subreddit, l):
     SubredditInstance = r.subreddit(subreddit)
