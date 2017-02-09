@@ -7,7 +7,7 @@ except:
     print "You must install %s to operate this program" % (lib)
     sys.exit()
 
-r = praw.Reddit(user_agent="YoutubeUserGet",client_secret="",client_id="")
+r = praw.Reddit(user_agent="Popular_Creators_Bot",client_secret="",client_id="",username="",password="")
 
 def GetTopSubmissions(subreddit, l):
     SubredditInstance = r.subreddit(subreddit)
@@ -15,16 +15,22 @@ def GetTopSubmissions(subreddit, l):
 
     UrlList = []
     KarmaList = []
+    PostUrl = []
     counter = 0
 
     for item in TopOfSub:
-        match = re.search(r"youtube\.com/.*v=([^&]*)", item.url)
+        match = re.search(r"(?:https?:\/\/)?(?:[0-9A-Z-]+\.)?(?:youtube|youtu|youtube-nocookie)\.(?:com|be)\/(?:watch\?v=|watch\?.+&v=|embed\/|v\/|.+\?v=)?([^&=\n%\?]{11})", item.url)
 
         if match:
             result = match.group(1)
             UrlList.append(result)
             KarmaList.append(item.ups)
+            PostUrl.append(item.url)
             counter+=1
         else:
             result = ""
-    return UrlList, KarmaList
+    return UrlList, KarmaList, PostUrl
+
+def PostTopSubmissions(url):
+    popularCreators=r.subreddit('popularcreators')
+    popularCreators.submit("TestPost", url=url,selftext=None)
