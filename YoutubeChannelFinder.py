@@ -4,7 +4,7 @@ from oauth2client.tools import argparser
 import re
 
 youtube = build("youtube", "v3",
-    developerKey="AIzaSyCyQN74f1KDl5NsjG9OP48_9DVcuDVEOYA")
+    developerKey="")
 
 def GetUserFromId(vidId):
     search_response = youtube.videos().list(id=vidId, part="id,snippet").execute()
