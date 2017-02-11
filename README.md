@@ -16,4 +16,4 @@ the user_agent can pretty much be whatever you want.
 
 Now everything should be ready to run!
 
-##usage: python main.py [-h] [--limit LIMIT] [--subreddit SUBREDDIT]
+##usage: python main.py [-h] [-l][--limit LIMIT] [-s][--subreddit SUBREDDIT] [-p][--postnumber POSTNUMBER]
