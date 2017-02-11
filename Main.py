@@ -35,7 +35,8 @@ def GetTopYoutuberList():
     for items in UrlLists:
         if counter<len(UrlLists):
             try:
-                YoutubeUser = {YoutubeChannelFinder.GetUserFromId(UrlLists[counter]):[Klist[counter], PostUrl[counter]]}
+                #YoutubeUser = {YoutubeChannelFinder.GetUserFromId(UrlLists[counter]):[Klist[counter], PostUrl[counter]]}
+                YoutubeUser = {YoutubeChannelFinder.GetUserNameFromId(UrlLists[counter]):Klist[counter]}
 
                 userList.append(YoutubeUser)
 
@@ -46,35 +47,38 @@ def GetTopYoutuberList():
             counter +=1
         else:
             None
-
+    #sum(item['gold'] for item in myLIst)
     for dictionary in userList:
         for key, value in dictionary.items():
             if OrderedDictionary.has_key(key):
                 OrderedDictionary[key] = value + OrderedDictionary[key]
+                print OrderedDictionary[key]
             else:
                 OrderedDictionary[key] = value
-    print "\n", OrderedDictionary
+    print OrderedDictionary, "YUMMY", "\n"
     x = Counter(OrderedDictionary)
+    print x, "\n"
     y = OrderedDict(x.most_common())
-    print y.keys()[0]
     print "\n"
+    print y.keys()
     for topUser in y:
-        YoutubeChannel = YoutubeChannelFinder.GetPlaylistIdFromId(UrlLists[usercounter])
-        print usercounter+1, topUser, y.values()[usercounter], YoutubeChannelFinder.GetMostRecentVideo(YoutubeChannelFinder.GetPlaylistIdFromId(UrlLists[usercounter]))
+
+        #YoutubeUrl = YoutubeChannelFinder.GetUserFromId(y.keys()[usercounter])
+
+        YoutubeChannel = YoutubeChannelFinder.GetMostRecentVideo(y.keys()[usercounter])
+        recentId = YoutubeChannelFinder.GetMostRecentPlaylistVideo(YoutubeChannel)
+
+        MostRecentYoutubePost.append(recentId[0])
+        MostRecentYoutubeName.append(recentId[1])
+
+        print usercounter, recentId[1], y.values()[usercounter]
         usercounter += 1
 
-    # for i in range(10):
-    #     print y.keys()[0], "THIS IS KEYS "
-    #     try:
-    #         YoutuberId = YoutubeChannelFinder.GetIdFromUsername()
-    #     except IndexError:
-    #         YoutuberId = "ProZd"
-    #     Playlist, VidName = YoutubeChannelFinder.GetMostRecentVideo(YoutuberId)
-    #
-    #     MostRecentYoutubePost.append(Playlist)
-    #     MostRecentYoutubeName.append(VidName)
-    #
-    #     TopReddit.PostTopSubmissions(MostRecentYoutubeName[i], "https://www.youtube.com/watch?v=" + MostRecentYoutubePost[i])
+    for i in range(10):
+         try:
+             TopReddit.PostTopSubmissions(MostRecentYoutubeName[i], "https://www.youtube.com/watch?v=" + MostRecentYoutubePost[i], i)
+         except IndexError:
+             None
 GetTopYoutuberList()
 
 # t = Timer(secs, GetTopYoutuberList)

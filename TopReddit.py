@@ -31,6 +31,6 @@ def GetTopSubmissions(subreddit, l):
             result = ""
     return UrlList, KarmaList, PostUrl
 
-def PostTopSubmissions(name, url):
+def PostTopSubmissions(name, url, postNum):
     popularCreators=r.subreddit('popularcreators')
-    popularCreators.submit("VidTest#1 " + name, url=url,selftext=None)
+    popularCreators.submit(str(postNum).decode("utf-8") + name, url=url,selftext=None)
