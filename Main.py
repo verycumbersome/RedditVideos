@@ -9,8 +9,9 @@ from datetime import datetime
 from threading import Timer
 
 parser = argparse.ArgumentParser(description='argparser for Python code')
-parser.add_argument('--limit', help='sets subreddit top get limit', type=int)
-parser.add_argument('--subreddit', help='sets subreddit from which to get top youtube users')
+parser.add_argument('-l', '--limit', help='sets subreddit top get limit', type=int)
+parser.add_argument('-s', '--subreddit', help='sets subreddit from which to get top youtube users')
+parser.add_argument('-p', '--postnumber', help='sets the number of videos to post to subreddit')
 args = parser.parse_args()
 
 currentdate=datetime.today()
@@ -57,7 +58,7 @@ def GetTopYoutuberList():
                 OrderedDictionary[key] = value
     x = Counter(OrderedDictionary)
     y = OrderedDict(x.most_common())
-    for i in range(20):
+    for i in range(args.postnumber):
         try:
             YoutubeChannel = YoutubeChannelFinder.GetMostRecentVideo(y.keys()[usercounter])
             recentId = YoutubeChannelFinder.GetMostRecentPlaylistVideo(YoutubeChannel)
