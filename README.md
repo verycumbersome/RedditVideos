@@ -1,5 +1,5 @@
 # RedditVideos_YoutubeUser
-First you need to make a Youtube API key. To do this go to https://console.developers.google.com. Login to your Google accont before creating a project.
+First you need to make a Youtube API key. To do this go to https://console.developers.google.com. Login to your Google account before creating a project.
 Once created, go to the `Library` tab to the left side of the page and find the `Youtube Data API`. Click on it and then click `enable` for it to work.
 Next, go into the `Credentials` tab. Create a new API key and name it whatever you prefer. Then create a new service account and make it a `Compute Engine default service account`.
 After both have been created, go to `manage service accounts` and then under options for your service account, click `create key` and select json.
