@@ -11,7 +11,7 @@ from threading import Timer
 parser = argparse.ArgumentParser(description='argparser for Python code')
 parser.add_argument('-l', '--limit', help='sets subreddit top get limit', type=int)
 parser.add_argument('-s', '--subreddit', help='sets subreddit from which to get top youtube users')
-parser.add_argument('-p', '--postnumber', help='sets the number of videos to post to subreddit')
+parser.add_argument('-p', '--postnumber', help='sets the number of videos to post to subreddit', type=int)
 args = parser.parse_args()
 
 currentdate=datetime.today()
