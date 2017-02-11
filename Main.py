@@ -55,30 +55,21 @@ def GetTopYoutuberList():
                 print OrderedDictionary[key]
             else:
                 OrderedDictionary[key] = value
-    print OrderedDictionary, "YUMMY", "\n"
     x = Counter(OrderedDictionary)
-    print x, "\n"
     y = OrderedDict(x.most_common())
-    print "\n"
-    print y.keys()
-    for topUser in y:
+    for i in range(20):
+        try:
+            YoutubeChannel = YoutubeChannelFinder.GetMostRecentVideo(y.keys()[usercounter])
+            recentId = YoutubeChannelFinder.GetMostRecentPlaylistVideo(YoutubeChannel)
 
-        #YoutubeUrl = YoutubeChannelFinder.GetUserFromId(y.keys()[usercounter])
+            MostRecentYoutubePost.append(recentId[0])
+            MostRecentYoutubeName.append(recentId[1])
 
-        YoutubeChannel = YoutubeChannelFinder.GetMostRecentVideo(y.keys()[usercounter])
-        recentId = YoutubeChannelFinder.GetMostRecentPlaylistVideo(YoutubeChannel)
-
-        MostRecentYoutubePost.append(recentId[0])
-        MostRecentYoutubeName.append(recentId[1])
-
-        print usercounter, recentId[1], y.values()[usercounter]
-        usercounter += 1
-
-    for i in range(10):
-         try:
-             TopReddit.PostTopSubmissions(MostRecentYoutubeName[i], "https://www.youtube.com/watch?v=" + MostRecentYoutubePost[i], i)
-         except IndexError:
-             None
+            print usercounter, recentId[1], y.values()[usercounter]
+            usercounter += 1
+            TopReddit.PostTopSubmissions(MostRecentYoutubeName[i], "https://www.youtube.com/watch?v=" + MostRecentYoutubePost[i], i)
+        except IndexError:
+            None
 GetTopYoutuberList()
 
 # t = Timer(secs, GetTopYoutuberList)

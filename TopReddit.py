@@ -33,4 +33,4 @@ def GetTopSubmissions(subreddit, l):
 
 def PostTopSubmissions(name, url, postNum):
     popularCreators=r.subreddit('popularcreators')
-    popularCreators.submit(str(postNum).decode("utf-8") + name, url=url,selftext=None)
+    popularCreators.submit(str(postNum+1).decode("utf-8")+ " " + name, url=url,selftext=None)
