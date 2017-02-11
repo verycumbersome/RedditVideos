@@ -7,11 +7,11 @@ except:
     print "You must install %s to operate this program" % (lib)
     sys.exit()
 
-r = praw.Reddit(user_agent="Popular_Creators_Bot",client_secret="",client_id="",username="",password="")
+r = praw.Reddit(user_agent="Popular_Creators_Bot",client_secret="-XFcJKpyFCrrkib_OU_ylL5bLkM",client_id="RxtcAmhbH9sWCA",username="Popular_Channels_Bot",password="Vh3-89G-Pv9-aoy")
 
 def GetTopSubmissions(subreddit, l):
     SubredditInstance = r.subreddit(subreddit)
-    TopOfSub = SubredditInstance.top(limit = l)
+    TopOfSub = SubredditInstance.top(limit = l, time_filter='month')
 
     UrlList = []
     KarmaList = []
@@ -31,6 +31,6 @@ def GetTopSubmissions(subreddit, l):
             result = ""
     return UrlList, KarmaList, PostUrl
 
-def PostTopSubmissions(name, url):
+def PostTopSubmissions(user, name, url):
     popularCreators=r.subreddit('popularcreators')
-    popularCreators.submit(name, url=url,selftext=None)
+    popularCreators.submit(user+" - "+name, url=url,selftext=None)

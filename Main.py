@@ -66,9 +66,9 @@ def GetTopYoutuberList():
             MostRecentYoutubePost.append(recentId[0])
             MostRecentYoutubeName.append(recentId[1])
 
-            print usercounter, recentId[1], y.values()[usercounter]
+            print usercounter, recentId[1], y.values()[usercounter], YoutubeChannelFinder.GetUserFromId(MostRecentYoutubePost[i])
             usercounter += 1
-            TopReddit.PostTopSubmissions(MostRecentYoutubeName[i], "https://www.youtube.com/watch?v=" + MostRecentYoutubePost[i])
+            TopReddit.PostTopSubmissions(YoutubeChannelFinder.GetUserFromId(MostRecentYoutubePost[i]), MostRecentYoutubeName[i], "https://www.youtube.com/watch?v=" + MostRecentYoutubePost[i])
         except IndexError:
             None
 GetTopYoutuberList()

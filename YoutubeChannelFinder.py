@@ -4,12 +4,12 @@ from oauth2client.tools import argparser
 import re
 
 youtube = build("youtube", "v3",
-    developerKey="")
+    developerKey="AIzaSyCyQN74f1KDl5NsjG9OP48_9DVcuDVEOYA")
 
 def GetUserFromId(vidId):
     search_response = youtube.videos().list(id=vidId, part="id,snippet").execute()
 
-    return search_response["items"][0]["snippet"]["channelId"]
+    return search_response["items"][0]["snippet"]["channelTitle"]
 
 def GetUserNameFromId(vidId):
     search_response = youtube.videos().list(id=vidId, part="id,snippet").execute()
