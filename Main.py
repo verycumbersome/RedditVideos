@@ -2,6 +2,7 @@ import YoutubeChannelFinder
 import TopReddit
 import argparse
 import threading
+import json
 
 from itertools import chain
 from collections import Counter, OrderedDict
@@ -12,6 +13,7 @@ parser = argparse.ArgumentParser(description='argparser for Python code')
 parser.add_argument('-l', '--limit', help='sets subreddit top get limit', type=int)
 parser.add_argument('-s', '--subreddit', help='sets subreddit from which to get top youtube users')
 parser.add_argument('-p', '--postnumber', help='sets the number of videos to post to subreddit', type=int)
+parser.add_argument('-y', '--karmalimit', help='sets the minum subscriber value for Youtube in order for it to be posted to subreddit', type=int)
 args = parser.parse_args()
 
 currentdate=datetime.today()
@@ -26,6 +28,8 @@ def GetTopYoutuberList():
     UrlLists, Klist, PostUrl = TopReddit.GetTopSubmissions(args.subreddit, args.limit)
     counter = 1
     usercounter = 0
+    additionalRequests = 0
+
     userList = []
     userUrl = []
     OrderedDictionary = {}
@@ -48,29 +52,43 @@ def GetTopYoutuberList():
             counter +=1
         else:
             None
-    #sum(item['gold'] for item in myLIst)
     for dictionary in userList:
         for key, value in dictionary.items():
             if OrderedDictionary.has_key(key):
                 OrderedDictionary[key] = value + OrderedDictionary[key]
-                print OrderedDictionary[key]
             else:
                 OrderedDictionary[key] = value
+    postFreq = Counter(OrderedDictionary.items())
+
     x = Counter(OrderedDictionary)
     y = OrderedDict(x.most_common())
-    for i in range(args.postnumber):
+    while (usercounter <= (args.postnumber + additionalRequests)):
         try:
             YoutubeChannel = YoutubeChannelFinder.GetMostRecentVideo(y.keys()[usercounter])
             recentId = YoutubeChannelFinder.GetMostRecentPlaylistVideo(YoutubeChannel)
+            subCount = int(YoutubeChannelFinder.GetSubCountFromId(y.keys()[usercounter]))
 
+            #VideoId for recent posts from playlist 'uploads'
             MostRecentYoutubePost.append(recentId[0])
+
+            #Video names for recent posts in playlist 'uploads'
             MostRecentYoutubeName.append(recentId[1])
 
-            print usercounter, recentId[1], y.values()[usercounter], YoutubeChannelFinder.GetUserFromId(MostRecentYoutubePost[i])
+            category = YoutubeChannelFinder.GetCategoryId(MostRecentYoutubePost[usercounter])
+
+            print usercounter, recentId[1], y.values()[usercounter], YoutubeChannelFinder.GetUserFromId(MostRecentYoutubePost[usercounter]), subCount, YoutubeChannelFinder.GetCategoryId(MostRecentYoutubePost[usercounter])
+            if subCount>30000 and category not in ["Entertainment", "Howto & Style", "News & Politics"]:
+                TopReddit.PostTopSubmissions(YoutubeChannelFinder.GetUserFromId(MostRecentYoutubePost[usercounter]), MostRecentYoutubeName[usercounter], "https://www.youtube.com/watch?v=" + MostRecentYoutubePost[usercounter])
+                with open('data.json', 'w') as outfile:
+                    json.dump(userList, outfile, sort_keys = True, indent = 4)
+                print "valid"
+            else:
+                additionalRequests+=1
+                print "invalid"
             usercounter += 1
-            TopReddit.PostTopSubmissions(YoutubeChannelFinder.GetUserFromId(MostRecentYoutubePost[i]), MostRecentYoutubeName[i], "https://www.youtube.com/watch?v=" + MostRecentYoutubePost[i])
         except IndexError:
-            None
+            break
+
 GetTopYoutuberList()
 
 # t = Timer(secs, GetTopYoutuberList)

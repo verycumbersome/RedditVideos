@@ -4,7 +4,7 @@ from oauth2client.tools import argparser
 import re
 
 youtube = build("youtube", "v3",
-    developerKey="AIzaSyCyQN74f1KDl5NsjG9OP48_9DVcuDVEOYA")
+    developerKey="")
 
 def GetUserFromId(vidId):
     search_response = youtube.videos().list(id=vidId, part="id,snippet").execute()
@@ -16,21 +16,22 @@ def GetUserNameFromId(vidId):
 
     return search_response["items"][0]["snippet"]["channelId"]
 
-def GetUserFromUrl(url):
-    match = re.search(r"(?:https?:\/\/)?(?:[0-9A-Z-]+\.)?(?:youtube|youtu|youtube-nocookie)\.(?:com|be)\/(?:watch\?v=|watch\?.+&v=|embed\/|v\/|.+\?v=)?([^&=\n%\?]{11})", url)
+def GetCategoryId(vidId):
+    search_response = youtube.videos().list(id=vidId, part="id,snippet").execute()
+    categoryId = search_response["items"][0]["snippet"]["categoryId"]
 
-    if match:
-        result = match.group(1)
+    return youtube.videoCategories().list(id=categoryId, part="snippet").execute()["items"][0]["snippet"]["title"]
 
-    search_response = youtube.videos().list(id=result, part="id,snippet").execute()
-    return search_response["items"][0]["snippet"]["channelId"]
+def GetThumbnailFromId(ChannelId):
+    search_response = youtube.channels().list(id=ChannelId, part="snippet").execute()
 
-def GetPlaylistIdFromId(VidId):
-    search_response = youtube.videos().list(id=VidId, part="snippet").execute()
+def GetSubCountFromId(channelId):
+    search_response = youtube.channels().list(id=channelId, part="statistics").execute()
 
     try:
-        return search_response["items"][0]["snippet"]["channelId"]
+        return search_response["items"][0]["statistics"]["subscriberCount"]
     except IndexError:
+        print "FUCKED UP"
         return ""
 
 def GetMostRecentVideo(ChannelId):

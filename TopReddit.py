@@ -7,7 +7,14 @@ except:
     print "You must install %s to operate this program" % (lib)
     sys.exit()
 
-r = praw.Reddit(user_agent="Popular_Creators_Bot",client_secret="-XFcJKpyFCrrkib_OU_ylL5bLkM",client_id="RxtcAmhbH9sWCA",username="Popular_Channels_Bot",password="Vh3-89G-Pv9-aoy")
+r = praw.Reddit(user_agent="Popular_Creators_Bot",client_secret="",client_id="",username="",password="")
+
+user = r.redditor("Popular_Channels_Bot")
+
+def DeleteAllSubmissions(username):
+    for p in username.submissions.top(limit=None):
+        p.delete()
+        print 'Post Deleted'
 
 def GetTopSubmissions(subreddit, l):
     SubredditInstance = r.subreddit(subreddit)
@@ -33,4 +40,6 @@ def GetTopSubmissions(subreddit, l):
 
 def PostTopSubmissions(user, name, url):
     popularCreators=r.subreddit('popularcreators')
+    #popularCreators.link_flair_text('Political')
     popularCreators.submit(user+" - "+name, url=url,selftext=None)
+DeleteAllSubmissions(user)
