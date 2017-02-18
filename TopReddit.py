@@ -53,5 +53,5 @@ def SearchUserVids(query):
 
     return search_results
 
-#print SearchUserVids("pewdiepie")
-DeleteAllSubmissions(user)
+print SearchUserVids("pewdiepie")
+#DeleteAllSubmissions(user)
