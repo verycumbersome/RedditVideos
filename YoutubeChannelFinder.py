@@ -18,12 +18,10 @@ def GetUserNameFromId(vidId):
 
 def GetCategoryId(vidId):
     search_response = youtube.videos().list(id=vidId, part="id,snippet").execute()
+    print type(search_response)
     categoryId = search_response["items"][0]["snippet"]["categoryId"]
 
     return youtube.videoCategories().list(id=categoryId, part="snippet").execute()["items"][0]["snippet"]["title"]
-
-def GetThumbnailFromId(ChannelId):
-    search_response = youtube.channels().list(id=ChannelId, part="snippet").execute()
 
 def GetSubCountFromId(channelId):
     search_response = youtube.channels().list(id=channelId, part="statistics").execute()
@@ -41,7 +39,7 @@ def GetMostRecentVideo(ChannelId):
         playlistId = search_response["items"][0]["contentDetails"]["relatedPlaylists"]["uploads"]
     except:
         playlistId = ChannelId
-        print "SOmething went wrong"
+        print "Something went wrong"
     return playlistId
 
 def GetMostRecentPlaylistVideo(playlistId):

@@ -1,4 +1,8 @@
 import re
+import urllib2
+import json
+import ast
+
 try:
     import praw
 except:
@@ -7,7 +11,7 @@ except:
     print "You must install %s to operate this program" % (lib)
     sys.exit()
 
-r = praw.Reddit(user_agent="Popular_Creators_Bot",client_secret="",client_id="",username="",password="")
+r = praw.Reddit(user_agent="",client_secret="",client_id="",username="",password="")
 
 user = r.redditor("Popular_Channels_Bot")
 
@@ -40,6 +44,14 @@ def GetTopSubmissions(subreddit, l):
 
 def PostTopSubmissions(user, name, url):
     popularCreators=r.subreddit('popularcreators')
-    #popularCreators.link_flair_text('Political')
     popularCreators.submit(user+" - "+name, url=url,selftext=None)
+
+def SearchUserVids(query):
+    search_results = json.loads(urllib2.urlopen("https://www.reddit.com/search.json?sort=top&q="+query).read())
+    with open('search.json', 'w') as outfile:
+        json.dump(search_results["data"]["children"], outfile, sort_keys = True, indent = 4, separators=(',', ': '))
+
+    return search_results
+
+#print SearchUserVids("pewdiepie")
 DeleteAllSubmissions(user)
