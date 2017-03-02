@@ -10,10 +10,10 @@ from datetime import datetime
 from threading import Timer
 
 parser = argparse.ArgumentParser(description='argparser for Python code')
-parser.add_argument('-l', '--limit', help='sets subreddit top get limit', type=int)
-parser.add_argument('-s', '--subreddit', help='sets subreddit from which to get top youtube users')
-parser.add_argument('-p', '--postnumber', help='sets the number of videos to post to subreddit', type=int)
-parser.add_argument('-y', '--karmalimit', help='sets the minum subscriber value for Youtube in order for it to be posted to subreddit', type=int)
+parser.add_argument('-l', '--limit', help='sets subreddit top get limit', type=int, default=1000)
+parser.add_argument('-s', '--subreddit', help='sets subreddit from which to get top youtube users', default="videos")
+parser.add_argument('-p', '--postnumber', help='sets the number of videos to post to subreddit', type=int, default=8)
+parser.add_argument('-y', '--karmalimit', help='sets the minimum subscriber value for Youtube in order for it to be posted to subreddit', type=int)
 args = parser.parse_args()
 
 currentdate=datetime.today()

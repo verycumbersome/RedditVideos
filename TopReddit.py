@@ -11,7 +11,7 @@ except:
     print "You must install %s to operate this program" % (lib)
     sys.exit()
 
-r = praw.Reddit(user_agent="",client_secret="",client_id="",username="",password="")
+r = praw.Reddit(user_agent="Popular_Creators_Bot",client_secret="",client_id="",username="",password="")
 
 user = r.redditor("Popular_Channels_Bot")
 
@@ -47,11 +47,16 @@ def PostTopSubmissions(user, name, url):
     popularCreators.submit(user+" - "+name, url=url,selftext=None)
 
 def SearchUserVids(query):
-    search_results = json.loads(urllib2.urlopen("https://www.reddit.com/search.json?sort=top&q="+query).read())
-    with open('search.json', 'w') as outfile:
-        json.dump(search_results["data"]["children"], outfile, sort_keys = True, indent = 4, separators=(',', ': '))
+    #urllib2.urlopen(https://www.reddit.com/api/v1/authorize?client_id=RxtcAmhbH9sWCA&response_type=TYPE&state=RANDOM_STRING&redirect_uri=URI&duration=DURATION&scope=SCOPE_STRING).read()
+    search_results = json.loads(urllib2.urlopen("https://www.reddit.com/search.json?sort=top&limit=10&q="+query).read())
+    with open('search.json', 'a') as outfile:
+        for i in range(10):
+            json.dump(search_results["data"]["children"][i], outfile, sort_keys = True, indent = 4, separators=(',', ': '))
 
+    with open('search.json') as data_file:
+        data = json.load(data_file)
+        print data
     return search_results
 
-print SearchUserVids("pewdiepie")
+#print SearchUserVids("pewdiepie")
 #DeleteAllSubmissions(user)
