@@ -11,7 +11,7 @@ except:
     print "You must install %s to operate this program" % (lib)
     sys.exit()
 
-r = praw.Reddit(user_agent="Popular_Creators_Bot",client_secret="",client_id="",username="",password="")
+r = praw.Reddit(user_agent="",client_secret="-",client_id="",username="",password="")
 
 user = r.redditor("Popular_Channels_Bot")
 

@@ -18,7 +18,6 @@ def GetUserNameFromId(vidId):
 
 def GetCategoryId(vidId):
     search_response = youtube.videos().list(id=vidId, part="id,snippet").execute()
-    print type(search_response)
     categoryId = search_response["items"][0]["snippet"]["categoryId"]
 
     return youtube.videoCategories().list(id=categoryId, part="snippet").execute()["items"][0]["snippet"]["title"]

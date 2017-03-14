@@ -50,13 +50,16 @@ def GetTopYoutuberList():
             counter +=1
         else:
             None
+
     #Appends all karma scores in dictionary to one key per user
     for dictionary in userList:
         for key, value in dictionary.items():
             if OrderedDictionary.has_key(key):
                 OrderedDictionary[key] = value + OrderedDictionary[key]
+
             else:
                 OrderedDictionary[key] = value
+
     postFreq = Counter(OrderedDictionary.items())
 
     #Sorts the dictionary of all Youtube channel IDs by the associated karma value
@@ -86,15 +89,18 @@ def GetTopYoutuberList():
 
             #filter for channel making it to approved submitters
             if subCount>30000 and category not in ["Entertainment", "Howto & Style", "News & Politics"] and y.values()[usercounter]>10000:
-                TopReddit.PostTopSubmissions(YoutubeChannelFinder.GetUserFromId(MostRecentYoutubePost[usercounter]), MostRecentYoutubeName[usercounter], "https://www.youtube.com/watch?v=" + MostRecentYoutubePost[usercounter])
-                YoutubeUsername.append(YoutubeChannelFinder.GetUserFromId(MostRecentYoutubePost[usercounter]))
-                with open('data.json', 'w') as outfile:
+                YoutubeUsername.append({YoutubeChannelFinder.GetUserFromId(MostRecentYoutubePost[usercounter]): "https://www.youtube.com/watch?v=" + MostRecentYoutubePost[usercounter]})
+
+                with open('data/youtubers.json', 'w') as outfile:
                     json.dump(YoutubeUsername, outfile, sort_keys = True, indent = 4)
+
                 print "valid", usercounter
             else:
                 additionalRequests+=1
                 print "invalid"
+
             usercounter += 1
+
         except IndexError:
             break
 
