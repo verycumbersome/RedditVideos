@@ -88,8 +88,8 @@ def GetTopYoutuberList():
             print usercounter, recentId[1], y.values()[usercounter], YoutubeChannelFinder.GetUserFromId(MostRecentYoutubePost[usercounter]), subCount, YoutubeChannelFinder.GetCategoryId(MostRecentYoutubePost[usercounter])
 
             #filter for channel making it to approved submitters
-            if subCount>30000 and category not in ["Entertainment", "Howto & Style", "News & Politics"] and y.values()[usercounter]>10000:
-                YoutubeUsername.append({YoutubeChannelFinder.GetUserFromId(MostRecentYoutubePost[usercounter]): "https://www.youtube.com/watch?v=" + MostRecentYoutubePost[usercounter]})
+            if subCount>30000 and category not in ["Entertainment", "Howto & Style", "News & Politics", "Sports"] and y.values()[usercounter]>10000:
+                YoutubeUsername.append({YoutubeChannelFinder.GetUserFromId(MostRecentYoutubePost[usercounter]): MostRecentYoutubePost[usercounter]})
 
                 with open('data/youtubers.json', 'w') as outfile:
                     json.dump(YoutubeUsername, outfile, sort_keys = True, indent = 4)
@@ -104,7 +104,16 @@ def GetTopYoutuberList():
         except IndexError:
             break
 
-GetTopYoutuberList()
+def postList():
+    with open("data/youtubers.json") as yList:
+        youtuberList = json.load(yList)
+
+    for items in youtuberList:
+        TopReddit.PostTopSubmissions(items.keys()[0], YoutubeChannelFinder.GetVidNameFromId(items.values()[0]), items.values()[0])
+        print YoutubeChannelFinder.GetVidNameFromId(items.values()[0])
+
+#GetTopYoutuberList()
+postList()
 
 # t = Timer(secs, GetTopYoutuberList)
 # t.start()
