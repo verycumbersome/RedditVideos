@@ -122,15 +122,16 @@ def getDiff():
         youtubers = json.load(yList)
 
     if bool(DeepDiff(youtubers, youtubers1)):
-        #getTopYoutuberList(True)
         for items in DeepDiff(youtubers, youtubers1, ignore_order=True)['iterable_item_added'].values():
-            print items
-        #TopReddit.PostTopSubmissions(items.keys()[0], YoutubeChannelFinder.GetVidNameFromId(items.values()[0]), items.values()[0])
+            print items.values()[0]
+            TopReddit.PostTopSubmissions(items.keys()[0], YoutubeChannelFinder.GetVidNameFromId(items.values()[0]), items.values()[0])
+        getTopYoutuberList(True)
+
         print "The Dict is different"
 
     else:
         print "The Dict is not different"
+postList()
 
-getDiff()
-# t = Timer(secs, GetTopYoutuberList)
-# t.start()
+t = Timer(secs, getDiff())
+t.start()

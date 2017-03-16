@@ -22,7 +22,7 @@ def DeleteAllSubmissions(username):
 
 def GetTopSubmissions(subreddit, l):
     SubredditInstance = r.subreddit(subreddit)
-    TopOfSub = SubredditInstance.top(limit = l, time_filter='month')
+    TopOfSub = SubredditInstance.top(limit = l, time_filter='all')
 
     UrlList = []
     KarmaList = []
@@ -59,4 +59,4 @@ def SearchUserVids(query):
     return search_results
 
 #print SearchUserVids("pewdiepie")
-#DeleteAllSubmissions(user)
+DeleteAllSubmissions(user)
