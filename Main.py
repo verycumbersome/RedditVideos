@@ -23,7 +23,7 @@ delta_t=timedifference-currentdate
 
 secs=delta_t.seconds+1
 
-def GetTopYoutuberList():
+def getTopYoutuberList(postJSON):
 
     UrlLists, Klist, PostUrl = TopReddit.GetTopSubmissions(args.subreddit, args.limit)
     counter = 1
@@ -91,8 +91,9 @@ def GetTopYoutuberList():
             if subCount>30000 and category not in ["Entertainment", "Howto & Style", "News & Politics", "Sports"] and y.values()[usercounter]>10000:
                 YoutubeUsername.append({YoutubeChannelFinder.GetUserFromId(MostRecentYoutubePost[usercounter]): MostRecentYoutubePost[usercounter]})
 
-                with open('data/youtubers.json', 'w') as outfile:
-                    json.dump(YoutubeUsername, outfile, sort_keys = True, indent = 4)
+                if postJSON:
+                    with open('data/youtubers.json', 'w') as outfile:
+                        json.dump(YoutubeUsername, outfile, sort_keys = True, indent = 4)
 
                 print "valid", usercounter
             else:
@@ -104,6 +105,8 @@ def GetTopYoutuberList():
         except IndexError:
             break
 
+    return YoutubeUsername
+
 def postList():
     with open("data/youtubers.json") as yList:
         youtuberList = json.load(yList)
@@ -112,8 +115,8 @@ def postList():
         TopReddit.PostTopSubmissions(items.keys()[0], YoutubeChannelFinder.GetVidNameFromId(items.values()[0]), items.values()[0])
         print YoutubeChannelFinder.GetVidNameFromId(items.values()[0])
 
-#GetTopYoutuberList()
-postList()
+print getTopYoutuberList(False)
+#postList()
 
 # t = Timer(secs, GetTopYoutuberList)
 # t.start()
