@@ -3,11 +3,12 @@ import TopReddit
 import argparse
 import threading
 import json
+import datetime
+import threading
 
 from itertools import chain
-from collections import Counter, OrderedDict
 from datetime import datetime
-from threading import Timer
+from collections import Counter, OrderedDict
 from deepdiff import DeepDiff
 
 parser = argparse.ArgumentParser(description='argparser for Python code')
@@ -18,11 +19,11 @@ parser.add_argument('-y', '--karmalimit', help='sets the minimum subscriber valu
 args = parser.parse_args()
 
 currentdate=datetime.today()
-timedifference=currentdate.replace(year=currentdate.year, month=currentdate.month, day=currentdate.day, hour=20, minute=0, second=0, microsecond=0)
-delta_t=timedifference-currentdate
+timedifference=currentdate.replace(year=currentdate.year, month=currentdate.month, day=currentdate.day, hour=currentdate.hour, minute=currentdate.minute, second=0, microsecond=0)
+currentdate, timedifference
+delta_t=currentdate-timedifference
 
-
-secs=delta_t.seconds+1
+secs=delta_t.seconds
 
 def getTopYoutuberList(postJSON):
 
@@ -131,7 +132,13 @@ def getDiff():
 
     else:
         print "The Dict is not different"
-postList()
 
-t = Timer(secs, getDiff())
-t.start()
+    try:
+        t = threading.Timer(10, getDiff)
+        t.start()
+    except KeyboardInterrupt:
+        t.cancel()
+
+getTopYoutuberList(True)
+postList()
+getDiff()

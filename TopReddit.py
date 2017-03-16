@@ -22,7 +22,7 @@ def DeleteAllSubmissions(username):
 
 def GetTopSubmissions(subreddit, l):
     SubredditInstance = r.subreddit(subreddit)
-    TopOfSub = SubredditInstance.top(limit = l, time_filter='all')
+    TopOfSub = SubredditInstance.top(limit = l, time_filter='month')
 
     UrlList = []
     KarmaList = []
