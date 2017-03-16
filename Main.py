@@ -8,6 +8,7 @@ from itertools import chain
 from collections import Counter, OrderedDict
 from datetime import datetime
 from threading import Timer
+from deepdiff import DeepDiff
 
 parser = argparse.ArgumentParser(description='argparser for Python code')
 parser.add_argument('-l', '--limit', help='sets subreddit top get limit', type=int, default=1000)
@@ -115,8 +116,21 @@ def postList():
         TopReddit.PostTopSubmissions(items.keys()[0], YoutubeChannelFinder.GetVidNameFromId(items.values()[0]), items.values()[0])
         print YoutubeChannelFinder.GetVidNameFromId(items.values()[0])
 
-print getTopYoutuberList(False)
-#postList()
+def getDiff():
+    youtubers1 = getTopYoutuberList(False)
+    with open("data/youtubers.json") as yList:
+        youtubers = json.load(yList)
 
+    if bool(DeepDiff(youtubers, youtubers1)):
+        #getTopYoutuberList(True)
+        for items in DeepDiff(youtubers, youtubers1, ignore_order=True)['iterable_item_added'].values():
+            print items
+        #TopReddit.PostTopSubmissions(items.keys()[0], YoutubeChannelFinder.GetVidNameFromId(items.values()[0]), items.values()[0])
+        print "The Dict is different"
+
+    else:
+        print "The Dict is not different"
+
+getDiff()
 # t = Timer(secs, GetTopYoutuberList)
 # t.start()
